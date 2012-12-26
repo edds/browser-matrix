@@ -88,15 +88,15 @@
         browser: 'Internet Explorer',
         version: function(row){ return row[2]; }
       },
-      { 
+      {
         key: /nokia/i,
         browser: 'Nokia',
         version: function(row){ return 'all'; }
       },
       {
         key: /Safari/,
-        browser: 'Safari', 
-        version: function(row){ 
+        browser: 'Safari',
+        version: function(row){
           var version = row[2].split('.');
           if(row[0] === 'iOS'){
             var iosVersion = row[3].split('.');
@@ -116,7 +116,7 @@
           return version[0];
         }
       },
-      { 
+      {
         key: /SAMSUNG-GT.*/,
         browser: 'Samsung-GT',
         version: function(row){ return 'all'; }
@@ -131,7 +131,7 @@
       }
     },
 
-    addData: function(cleanData, os, browser, version, count){
+    addData: function(cleanData, os, browser, version, date, count){
       os = matrix.cleanOS(os);
       if(typeof cleanData[os] === 'undefined'){
         cleanData[os] = {};
@@ -140,9 +140,12 @@
         cleanData[os][browser] = {};
       }
       if(typeof cleanData[os][browser][version] === 'undefined'){
-        cleanData[os][browser][version] = 0;
+        cleanData[os][browser][version] = {};
       }
-      cleanData[os][browser][version] += parseInt(count, 10);
+      if(typeof cleanData[os][browser][version][date] === 'undefined'){
+        cleanData[os][browser][version][date] = 0;
+      }
+      cleanData[os][browser][version][date] += parseInt(count, 10);
       return cleanData;
     },
 
@@ -168,11 +171,22 @@
       $('table').tablesorter();
     },
 
-    init: function(){
-      $.getJSON(matrix.buildUrl('ga:operatingSystem,ga:browser,ga:browserVersion,ga:operatingSystemVersion', 'ga:visitors', '2012-10-21', '2012-11-10'), 
+    getNewData: function(){
+      if(matrix.currentDaysAgo > 0){
+        matrix.currentDaysAgo = matrix.currentDaysAgo - 1;
+      } else {
+        return false;
+      }
+      var date = new Date(), requestDate;
+      date.setDate(date.getDate() - matrix.currentDaysAgo);
+      requestDate = date.getFullYear() +'-'+ (date.getMonth()+1) +'-'+ matrix.zeroPad(date.getDate());
+
+      $.getJSON(matrix.buildUrl('ga:operatingSystem,ga:browser,ga:browserVersion,ga:operatingSystemVersion', 'ga:visitors', requestDate, requestDate),
         function(data){
-          var cleanData = {},
-              totalVisitors = data.totalsForAllResults['ga:visitors'];
+          if(typeof matrix.cleanData.dateTotals === 'undefined'){
+            matrix.cleanData.dateTotals = {};
+          }
+          matrix.cleanData.dateTotals[requestDate] = data.totalsForAllResults['ga:visitors'];
 
           data.rows.forEach(function(data,i){
             var i, row, found = false;
@@ -180,17 +194,31 @@
               row = matrix.cleanup[i];
               if(row.key.exec(data[1])){
                 found = true;
-                cleanData = matrix.addData(cleanData, data[0], row.browser, row.version(data), data[4]);
+                matrix.cleanData = matrix.addData(matrix.cleanData, data[0], row.browser, row.version(data), requestDate, data[4]);
               }
             }
             if(found === false){
-              cleanData = matrix.addData(cleanData, data[0], data[1], 'all', data[4]);
+              matrix.cleanData = matrix.addData(matrix.cleanData, data[0], data[1], 'all', requestDate, data[4]);
             }
           });
-
-          matrix.display(cleanData, totalVisitors);
+          console.log(matrix.cleanData);
+          matrix.getNewData();
         }
       );
+    },
+    cleanData: {},
+
+    zeroPad: function(i){
+      if( i < 10 ){
+        return '0' + i;
+      }
+      return i;
+    },
+
+    currentDaysAgo: 30,
+
+    init: function(){
+      matrix.getNewData();
     }
   }
 
