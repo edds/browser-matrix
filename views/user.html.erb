@@ -155,17 +155,22 @@
     },
     display: function(data, totalVisitors){
       var os, browser, version,
-          $tbody = $('table tbody');
+          $tbody = $('table tbody'),
+          date = new Date(),
+          requestDate = date.getFullYear() +'-'+ (date.getMonth()+1) +'-'+ matrix.zeroPad(date.getDate());
+
       for(os in data){
       for(browser in data[os]){
         for(version in data[os][browser]){
-          $tbody.append("<tr>"
-          + "<td>"+ os +"</td>"
-          + "<td>"+ browser +"</td>"
-          + "<td>"+ version +"</td>"
-          + "<td>"+ data[os][browser][version] +"</td>"
-          + "<td>"+ matrix.percent(data[os][browser][version],totalVisitors) +"%</td>"
-          +"</tr>")
+          if(data[os][browser][version][requestDate]){
+            $tbody.append("<tr>"
+            + "<td>"+ os +"</td>"
+            + "<td>"+ browser +"</td>"
+            + "<td>"+ version +"</td>"
+            + "<td>"+ data[os][browser][version][requestDate] +"</td>"
+            + "<td>"+ matrix.percent(data[os][browser][version][requestDate],data.dateTotals[requestDate]) +"%</td>"
+            +"</tr>")
+          }
         }
       }}
       $('table').tablesorter();
@@ -215,7 +220,7 @@
       return i;
     },
 
-    currentDaysAgo: 30,
+    currentDaysAgo: 1,
 
     init: function(){
       matrix.getNewData();
