@@ -2,9 +2,20 @@
 
 <title>Browser Matrix</title>
 
+<header>
+  <h1>Browser Matrix</h1>
+</header>
+<div id="wrapper"></div>
+
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="javascripts/vendor/mustache.js"></script>
+
 <script src="javascripts/user.js"></script>
 <script src="javascripts/auth.js"></script>
+<script src="javascripts/template.js"></script>
+<script src="javascripts/manager.js"></script>
+
 
 <script>
   if(typeof window.matrix === 'undefined'){ window.matrix = {}; }
@@ -20,5 +31,13 @@
     }
   };
 
-  matrix.user.getAccounts();
+  matrix.manager.init();
+</script>
+<script type="text/mustache" id="select-options">
+  <h2>Select your {{object}}</h2>
+  <ol>
+    {{#options}}
+      <li><a href="#" data-id="{{id}}">{{name}}</a></li>
+    {{/options}}
+  </ol>
 </script>
