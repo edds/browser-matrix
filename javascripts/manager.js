@@ -29,7 +29,7 @@
         e.preventDefault();
         manager.propertyId = $(e.target).data('id');
         $('#wrapper').off('click', 'a');
-        matrix.user.getProfiles(manager.accountId, manager.propertyId, manager.renderProperties);;
+        matrix.user.getProfiles(manager.accountId, manager.propertyId, manager.renderProfiles);
       });
     },
     renderProfiles: function(data){
@@ -39,8 +39,16 @@
       });
       $('#wrapper').on('click', 'a', function(e){
         e.preventDefault();
-        manager.propertyId = $(e.target).data('id');
+        manager.profileId = $(e.target).data('id');
         $('#wrapper').off('click', 'a');
+        matrix.browsers.update(manager.profileId, manager.renderStats);
+      });
+    },
+    renderStats: function(){
+      var stats = matrix.browsers.getData();
+      matrix.template('wrapper', 'browser-table', {
+        results: stats,
+        days: matrix.browsers.dates
       });
     }
   };

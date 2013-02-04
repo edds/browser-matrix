@@ -10,15 +10,15 @@
 
     getAccounts: function(callback){
       var endpoint = 'https://www.googleapis.com/analytics/v3/management/accounts';
-      user.apiRequest(endpoint, callback);
+      user.apiRequest(endpoint, function(data){ callback(user.parseResponse(data)); });
     },
     getProperties: function(accountId, callback){
       var endpoint = 'https://www.googleapis.com/analytics/v3/management/accounts/'+accountId+'/webproperties';
-      user.apiRequest(endpoint, callback);
+      user.apiRequest(endpoint, function(data){ callback(user.parseResponse(data)); });
     },
     getProfiles: function(accountId, webPropertyId, callback){
       var endpoint = 'https://www.googleapis.com/analytics/v3/management/accounts/'+accountId+'/webproperties/'+webPropertyId+'/profiles';
-      user.apiRequest(endpoint, callback);
+      user.apiRequest(endpoint, function(data){ callback(user.parseResponse(data)); });
     },
     parseResponse: function(data){
       var i, _i, output = [];
@@ -57,9 +57,7 @@
           $.ajax({
             dataType: 'json',
             url: requestUri,
-            success: function(data){
-              callback(user.parseResponse(data));
-            }
+            success: callback
           });
         } else {
           alert('Your session has expired, please reload the page');

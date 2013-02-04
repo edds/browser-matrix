@@ -5,11 +5,13 @@
   if(typeof root.matrix === 'undefined'){ root.matrix = {} }
 
   var browsers = {
-    data: {},
+    dates: [],
+    totals: [],
+    data: [],
     endpoint: function(profileId, startDate, endDate){
       return "https://www.googleapis.com/analytics/v3/data/ga?"
       + "ids="+ profileId +"&"
-      + "dimensions=ga:operatingSystem,ga:browser,ga:browserVersion,ga:operatingSystemVersion"
+      + "dimensions=ga:operatingSystem,ga:browser,ga:browserVersion,ga:operatingSystemVersion&"
       + "metrics=ga:visitors&"
       + "start-date="+ startDate +"&"
       + "end-date="+ endDate +"&"
@@ -90,30 +92,100 @@
         return value;
       }
     },
-
-    addData: function(os, browser, version, date, count){
+    addData: function(options){
       var result = false,
           i, _i;
       for(i=0,_i=browsers.data.length; i<_i; i++){
         result = browsers.data[i];
-        if(result.os === os && result.browser === browser && result.version === version){
+        if(result.os === options.os && result.browser === options.browser && result.version === options.version){
           break;
         }
         result = false;
       }
       if(!result){
-        result = {};
+        result = { os: options.os, browser: options.browser, version: options.version };
         browsers.data.push(result);
       }
-      if(typeof result[date] === 'undefined'){
-        result[date] = 0;
+      if(typeof result[options.date] === 'undefined'){
+        result[options.date] = 0;
       }
-      result[date] = result[date] = + parseInt(count, 10);
+      result[options.date] = result[options.date] + parseInt(options.visits, 10);
     },
     percent: function(value, total){
       var percent = (value/total) * 100;
       return Math.round(percent * 100)/100;
     },
+    update: function(profileId, callback){
+      var date = new Date(), startDate, endDate;
+      date.setDate(date.getDate() - 7);
+      startDate = date.getFullYear() +'-'+ browsers.zeroPad(date.getMonth()+1) +'-'+ browsers.zeroPad(date.getDate());
+      date.setDate(date.getDate() + 6);
+      endDate = date.getFullYear() +'-'+ browsers.zeroPad(date.getMonth()+1) +'-'+ browsers.zeroPad(date.getDate());
+
+      var endpoint = browsers.endpoint('ga:'+profileId, startDate, endDate);
+      matrix.user.apiRequest(endpoint, function(data){
+        var totalVisits = data.totalsForAllResults['ga:visitors'];
+        browsers.totals.push(totalVisits);
+        browsers.dates.push(startDate);
+
+        data.rows.forEach(function(data,i){
+          var i, _i, row, found = false;
+          for(i=0,_i=browsers.cleanBrowser.length; i<_i; i++){
+            row = browsers.cleanBrowser[i];
+            if(row.key.exec(data[1])){
+              found = true;
+              browsers.addData({
+                os: browsers.cleanOS(data[0]),
+                browser: row.browser, 
+                version: row.version(data),
+                date: startDate,
+                visits: data[4]
+              });
+              break;
+            }
+          }
+          if(found === false){
+            browsers.addData({
+              os: browsers.cleanOS(data[0]),
+              browser: data[1], 
+              version: 'all',
+              date: startDate,
+              visits: data[4]
+            });
+          }
+        });
+        callback();
+      });
+    },
+    zeroPad: function(i){
+      if( i < 10 ){
+        return '0' + i;
+      }
+      return i;
+    },
+    getData: function(){
+      var out = [],
+          browser,
+          i, _i, j, _j;
+
+      for(i=0,_i=browsers.data.length; i<_i; i++){
+        browser = {
+          os: browsers.data[i].os,
+          browser: browsers.data[i].browser,
+          version: browsers.data[i].version,
+          days: []
+        };
+        for(j=0,_j=browsers.dates.length; j<_j; j++){
+          if(typeof browsers.data[i][browsers.dates[j]] !== 'undefined'){
+            browser.days.push(browsers.percent(browsers.data[i][browsers.dates[j]], browsers.totals[j]));
+          } else {
+            browser.days.push(0);
+          }
+        }
+        out.push(browser);
+      }
+      return out;
+    }
   };
   root.matrix.browsers = browsers;
 }).call(this);

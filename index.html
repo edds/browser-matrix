@@ -11,9 +11,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="javascripts/vendor/mustache.js"></script>
 
-<script src="javascripts/user.js"></script>
 <script src="javascripts/auth.js"></script>
+<script src="javascripts/browsers.js"></script>
 <script src="javascripts/template.js"></script>
+<script src="javascripts/user.js"></script>
 <script src="javascripts/manager.js"></script>
 
 
@@ -40,4 +41,30 @@
       <li><a href="#" data-id="{{id}}">{{name}}</a></li>
     {{/options}}
   </ol>
+</script>
+<script type="text/mustache" id="browser-table">
+  <table>
+    <thead>
+      <tr>
+        <th>OS</th>
+        <th>Browser</th>
+        <th>Version</th>
+        {{#days}}
+          <th>{{.}}</th>
+        {{/days}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#results}}
+        <tr>
+          <td>{{os}}</td>
+          <td>{{browser}}</td>
+          <td>{{version}}</td>
+          {{#days}}
+            <td>{{.}}</td>
+          {{/days}}
+        </tr>
+      {{/results}}
+    </tbody>
+  </table>
 </script>
