@@ -182,6 +182,9 @@
             browser.days.push(0);
           }
         }
+        out.sort(function(a, b){
+          return b.days[0] - a.days[0];
+        });
         out.push(browser);
       }
       return out;
