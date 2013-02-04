@@ -115,8 +115,8 @@
       var percent = (value/total) * 100;
       return Math.round(percent * 100)/100;
     },
-    update: function(profileId, callback){
-      var date = new Date(), startDate, endDate;
+    update: function(profileId, callback, date){
+      var startDate, endDate;
       date.setDate(date.getDate() - 7);
       startDate = date.getFullYear() +'-'+ browsers.zeroPad(date.getMonth()+1) +'-'+ browsers.zeroPad(date.getDate());
       date.setDate(date.getDate() + 6);

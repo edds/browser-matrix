@@ -5,6 +5,7 @@
   if(typeof root.matrix === 'undefined'){ root.matrix = {} }
 
   var manager = {
+    renderedWeeks: 0,
     init: function(){
       matrix.user.getAccounts(manager.renderAccounts);
     },
@@ -41,15 +42,22 @@
         e.preventDefault();
         manager.profileId = $(e.target).data('id');
         $('#wrapper').off('click', 'a');
-        matrix.browsers.update(manager.profileId, manager.renderStats);
+        matrix.browsers.update(manager.profileId, manager.renderStats, new Date());
       });
     },
     renderStats: function(){
-      var stats = matrix.browsers.getData();
+      var stats = matrix.browsers.getData(),
+          date;
       matrix.template('wrapper', 'browser-table', {
         results: stats,
         days: matrix.browsers.dates
       });
+      if(manager.renderedWeeks < 4){
+        manager.renderedWeeks = manager.renderedWeeks + 1;
+        date = new Date();
+        date.setDate(date.getDate() - (7*manager.renderedWeeks));
+        matrix.browsers.update(manager.profileId, manager.renderStats, date);
+      }
     }
   };
   root.matrix.manager = manager;
