@@ -43,6 +43,7 @@
         manager.profileId = $(e.target).data('id');
         $('#wrapper').off('click', 'a');
         matrix.browsers.update(manager.profileId, manager.renderStats, new Date());
+        matrix.graph.init();
       });
     },
     renderStats: function(){
@@ -52,7 +53,8 @@
         results: stats,
         days: matrix.browsers.dates
       });
-      if(manager.renderedWeeks < 4){
+      matrix.graph.addData(matrix.browsers.dates, stats);
+      if(manager.renderedWeeks < 8){
         manager.renderedWeeks = manager.renderedWeeks + 1;
         date = new Date();
         date.setDate(date.getDate() - (7*manager.renderedWeeks));

@@ -125,8 +125,8 @@
       var endpoint = browsers.endpoint('ga:'+profileId, startDate, endDate);
       matrix.user.apiRequest(endpoint, function(data){
         var totalVisits = data.totalsForAllResults['ga:visitors'];
-        browsers.totals.push(totalVisits);
-        browsers.dates.push(startDate);
+        browsers.totals.unshift(totalVisits);
+        browsers.dates.unshift(startDate);
 
         data.rows.forEach(function(data,i){
           var i, _i, row, found = false;
@@ -177,9 +177,9 @@
         };
         for(j=0,_j=browsers.dates.length; j<_j; j++){
           if(typeof browsers.data[i][browsers.dates[j]] !== 'undefined'){
-            browser.days.push(browsers.percent(browsers.data[i][browsers.dates[j]], browsers.totals[j]));
+            browser.days.unshift(browsers.percent(browsers.data[i][browsers.dates[j]], browsers.totals[j]));
           } else {
-            browser.days.push(0);
+            browser.days.unshift(0);
           }
         }
         out.sort(function(a, b){
