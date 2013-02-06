@@ -47,13 +47,12 @@
     },
     addData: function(days, data){
       var i, _i, line;
-      graph.x = d3.scale.linear().domain([0, days.length-1]).range([0, graph.width]);
+      graph.x = d3.scale.linear().domain([0, days.length-1]).range([graph.width, 0]);
 
       line = graph.lines.selectAll('.line')
-      .data(data.slice(0,10));
+      .data(data);
 
       line.transition()
-          .duration(100)
             .attr('d', function(d){ return graph.line(d.days); });
 
       
