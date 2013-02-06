@@ -31,6 +31,7 @@
       ];
 
       graph.lines = graph.svg.append('g').attr('class', 'lines')
+      graph.colours = d3.scale.category10();
 
       axisCords.map(function(d){
         axis.append('svg:line')
@@ -49,17 +50,18 @@
       graph.x = d3.scale.linear().domain([0, days.length-1]).range([0, graph.width]);
 
       line = graph.lines.selectAll('.line')
-      .data(data);
+      .data(data.slice(0,10));
 
       line.transition()
-          .duration(750)
-            .attr('d', function(d){ console.log(d); return graph.line(d.days); });
+          .duration(100)
+            .attr('d', function(d){ return graph.line(d.days); });
 
       
       line.enter()
           .append('path')
             .attr('class', 'line')
-            .attr('d', function(d){ console.log(d); return graph.line(d.days); });
+            .attr('d', function(d){ return graph.line(d.days); })
+            .attr('stroke', function(d,i){ return graph.colours(i); });
     }
   };
   root.matrix.graph = graph;
