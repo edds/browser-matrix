@@ -136,7 +136,7 @@
               found = true;
               browsers.addData({
                 os: browsers.cleanOS(data[0]),
-                browser: row.browser, 
+                browser: row.browser,
                 version: row.version(data),
                 date: startDate,
                 visits: data[4]
@@ -147,7 +147,7 @@
           if(found === false){
             browsers.addData({
               os: browsers.cleanOS(data[0]),
-              browser: data[1], 
+              browser: data[1],
               version: 'all',
               date: startDate,
               visits: data[4]
@@ -183,7 +183,7 @@
           }
         }
         out.sort(function(a, b){
-          return b.days[0] - a.days[0];
+          return Math.max.apply(null, b.days) - Math.max.apply(null, a.days);
         });
         out.push(browser);
       }

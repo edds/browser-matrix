@@ -50,7 +50,7 @@
       graph.x = d3.scale.linear().domain([0, days.length-1]).range([graph.width, 0]);
 
       line = graph.lines.selectAll('.line')
-      .data(data);
+      .data(data.slice(0,15));
 
       line.transition()
             .attr('d', function(d){ return graph.line(d.days); });
