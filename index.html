@@ -2,6 +2,12 @@
 
 <title>Browser Matrix</title>
 <style>
+body {
+  font: 16px helvetica, sans-serif;
+}
+table tr:nth-child(2n) td {
+  background: #eee;
+}
 label {
   display: block;
   float: left;
@@ -28,9 +34,11 @@ line {
 }
 .browser path {
   stroke-width: 2px;
+  opacity: 0.5;
 }
 .browser:hover path {
   stroke-width: 4px;
+  opacity: 1;
 }
 .browser text {
   fill: transparent;
@@ -123,7 +131,7 @@ line {
           <td>{{browser}}</td>
           <td>{{version}}</td>
           {{#days}}
-            <td>{{.}}</td>
+            <td>{{.}}%</td>
           {{/days}}
         </tr>
       {{/results}}

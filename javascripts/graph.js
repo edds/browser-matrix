@@ -54,7 +54,7 @@
 
       // add new data to the browsers
       browsers = graph.browsers.selectAll('.browser')
-        .data(data.slice(0,15), function(d){ return d.os+'-'+d.browser+'-'+d.version; })
+        .data(data.slice(0,25), function(d){ return d.os+'-'+d.browser+'-'+d.version; })
 
       // add new elemnts not matched by previous data
       browser = browsers.enter()
