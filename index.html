@@ -2,12 +2,37 @@
 
 <title>Browser Matrix</title>
 <style>
+text {
+  font-family: sans-serif;
+}
 path,
 line {
   fill: none;
 }
 .axis line {
   stroke: #000;
+}
+.browser:hover {
+  z-index: 10;
+}
+.browser path {
+  stroke-width: 2px;
+}
+.browser:hover path {
+  stroke-width: 4px;
+}
+.browser text {
+  fill: transparent;
+}
+.browser:hover text {
+  fill: #000;
+}
+.axis line {
+  stroke: #ccc;
+}
+.axis .x-tick line,
+.axis .y-tick line {
+  stroke-dasharray: 10,4;
 }
 </style>
 
