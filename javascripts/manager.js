@@ -10,40 +10,37 @@
       matrix.user.getAccounts(manager.renderAccounts);
     },
     renderAccounts: function(data){
-      matrix.template('wrapper', 'select-options', {
-        object: 'account',
-        options: data
-      });
-      $('#wrapper').on('click', 'a', function(e){
-        e.preventDefault();
-        manager.accountId = $(e.target).data('id');
-        $('#wrapper').off('click', 'a');
-        matrix.user.getProperties(manager.accountId, manager.renderProperties);;
+      var $accounts = $('#account');
+      matrix.template('account', 'select-options', { object: 'account', options: data });
+      $accounts.attr('disabled', false);
+      $accounts.on('change', function(e){
+        manager.accountId = $accounts.val();
+        if(manager.accountId !== ''){
+          matrix.user.getProperties(manager.accountId, manager.renderProperties);;
+        }
       });
     },
     renderProperties: function(data){
-      matrix.template('wrapper', 'select-options', {
-        object: 'property',
-        options: data
-      });
-      $('#wrapper').on('click', 'a', function(e){
-        e.preventDefault();
-        manager.propertyId = $(e.target).data('id');
-        $('#wrapper').off('click', 'a');
-        matrix.user.getProfiles(manager.accountId, manager.propertyId, manager.renderProfiles);
+      var $properties = $('#property');
+      matrix.template('property', 'select-options', { object: 'property',  options: data });
+      $properties.attr('disabled', false);
+      $properties.on('change', function(e){
+        manager.propertyId = $properties.val();
+        if(manager.propertyId !== ''){
+          matrix.user.getProfiles(manager.accountId, manager.propertyId, manager.renderProfiles);
+        }
       });
     },
     renderProfiles: function(data){
-      matrix.template('wrapper', 'select-options', {
-        object: 'profile',
-        options: data
-      });
-      $('#wrapper').on('click', 'a', function(e){
-        e.preventDefault();
-        manager.profileId = $(e.target).data('id');
-        $('#wrapper').off('click', 'a');
-        matrix.browsers.update(manager.profileId, manager.renderStats, new Date());
-        matrix.graph.init();
+      var $profiles = $('#profile');
+      matrix.template('profile', 'select-options', { object: 'property', options: data });
+      $profiles.attr('disabled', false);
+      $profiles.on('change', function(e){
+        manager.profileId = $profiles.val();
+        if(manager.profile !== ''){
+          matrix.browsers.update(manager.profileId, manager.renderStats, new Date());
+          matrix.graph.init();
+        }
       });
     },
     renderStats: function(){

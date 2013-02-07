@@ -2,6 +2,17 @@
 
 <title>Browser Matrix</title>
 <style>
+label {
+  display: block;
+  float: left;
+  width: 100px;
+  clear: left;
+}
+select {
+  width: 200px;
+  float: left;
+  display: block;
+}
 text {
   font-family: sans-serif;
 }
@@ -38,6 +49,21 @@ line {
 
 <header>
   <h1>Browser Matrix</h1>
+
+  <label for="account">Account:</label>
+  <select id="account" name="account" disabled="disabled">
+    <option>Select account</option>
+  </select>
+
+  <label for="property">Property:</label>
+  <select id="property" name="property" disabled="disabled">
+    <option>Select property</option>
+  </select>
+
+  <label for="profile">Profile:</label>
+  <select id="profile" name="profile" disabled="disabled">
+    <option>Select profile</option>
+  </select>
 </header>
 <div id="graph"></div>
 <div id="wrapper"></div>
@@ -73,12 +99,10 @@ line {
   matrix.manager.init();
 </script>
 <script type="text/mustache" id="select-options">
-  <h2>Select your {{object}}</h2>
-  <ol>
-    {{#options}}
-      <li><a href="#" data-id="{{id}}">{{name}}</a></li>
-    {{/options}}
-  </ol>
+  <option value="">Select {{object}}</option>
+  {{#options}}
+    <option value="{{id}}">{{name}}</option>
+  {{/options}}
 </script>
 <script type="text/mustache" id="browser-table">
   <table>
