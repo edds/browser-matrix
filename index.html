@@ -1,77 +1,45 @@
 <!doctype html>
 
 <title>Browser Matrix</title>
-<style>
-body {
-  font: 16px helvetica, sans-serif;
-}
-table tr:nth-child(2n) td {
-  background: #eee;
-}
-label {
-  display: block;
-  float: left;
-  width: 100px;
-  clear: left;
-}
-select {
-  width: 200px;
-  float: left;
-  display: block;
-}
-text {
-  font-family: sans-serif;
-}
-path,
-line {
-  fill: none;
-}
-.axis line {
-  stroke: #000;
-}
-.browser:hover {
-  z-index: 10;
-}
-.browser path {
-  stroke-width: 2px;
-  opacity: 0.5;
-}
-.browser:hover path {
-  stroke-width: 4px;
-  opacity: 1;
-}
-.browser text {
-  fill: transparent;
-}
-.browser:hover text {
-  fill: #000;
-}
-.axis line {
-  stroke: #ccc;
-}
-.axis .x-tick line,
-.axis .y-tick line {
-  stroke-dasharray: 10,4;
-}
-</style>
+<link rel="stylesheet" href="./stylesheets/base.css">
 
 <header>
   <h1>Browser Matrix</h1>
 
-  <label for="account">Account:</label>
-  <select id="account" name="account" disabled="disabled">
-    <option>Select account</option>
-  </select>
+  <div class="account-options">
+    <label for="account">Account:</label>
+    <select id="account" name="account" disabled="disabled">
+      <option>Select account</option>
+    </select>
 
-  <label for="property">Property:</label>
-  <select id="property" name="property" disabled="disabled">
-    <option>Select property</option>
-  </select>
+    <label for="property">Property:</label>
+    <select id="property" name="property" disabled="disabled">
+      <option>Select property</option>
+    </select>
 
-  <label for="profile">Profile:</label>
-  <select id="profile" name="profile" disabled="disabled">
-    <option>Select profile</option>
-  </select>
+    <label for="profile">Profile:</label>
+    <select id="profile" name="profile" disabled="disabled">
+      <option>Select profile</option>
+    </select>
+  </div>
+  <div class="page-options">
+    <label for="period">Period:</label>
+    <select id="period" name="period">
+      <option value="3">3 days</option>
+      <option value="7" selected>7 days</option>
+      <option value="14">14 days</option>
+      <option value="30">30 days</option>
+    </select>
+
+    <label for="lines">Graph</label>
+    <select id="lines" name="lines">
+      <option value="5">5 browsers</option>
+      <option value="10">10 browsers</option>
+      <option value="15" selected>15 browsers</option>
+      <option value="20">20 browsers</option>
+      <option value="25">25 browsers</option>
+    </select>
+  </div>
 </header>
 <div id="graph"></div>
 <div id="wrapper"></div>

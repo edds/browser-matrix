@@ -1,0 +1,55 @@
+body {
+  font: 16px helvetica, sans-serif;
+  text-align: center; }
+
+header {
+  display: block;
+  max-width: 870px;
+  margin: 0 auto;
+  text-align: left; }
+  header h1 {
+    font: bold 36px helvetica;
+    padding: 5px 0 10px;
+    border-bottom: 3px solid; }
+  header div {
+    display: block;
+    float: left;
+    width: 50%; }
+    header div label {
+      display: block;
+      float: left;
+      width: 100px;
+      clear: left; }
+    header div select {
+      width: 200px;
+      float: left;
+      display: block; }
+
+table {
+  width: 100%;
+  text-align: left; }
+  table thead th {
+    border-bottom: 2px solid; }
+  table tbody tr:nth-child(2n) td {
+    background: #eee; }
+
+svg text {
+  font-family: sans-serif; }
+svg path,
+svg line {
+  fill: none; }
+svg .axis line {
+  stroke: #ccc; }
+svg .axis .x-tick line,
+svg .axis .y-tick line {
+  stroke-dasharray: 10,4; }
+svg .browser path {
+  stroke-width: 2px;
+  opacity: 0.5; }
+svg .browser.active path, svg .browser:hover path {
+  stroke-width: 4px;
+  opacity: 1; }
+svg .browser text {
+  fill: transparent; }
+svg .browser.active text, svg .browser:hover text {
+  fill: #000; }

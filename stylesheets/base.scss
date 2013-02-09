@@ -1,0 +1,85 @@
+body {
+  font: 16px helvetica, sans-serif;
+  text-align: center;
+}
+header {
+  display: block;
+  max-width: 870px;
+  margin: 0 auto;
+  text-align: left;
+
+  h1 {
+    font: bold 36px helvetica;
+    padding: 5px 0 10px;
+    border-bottom: 3px solid;
+  }
+  div {
+    display: block;
+    float: left;
+    width: 50%;
+
+    label {
+      display: block;
+      float: left;
+      width: 100px;
+      clear: left;
+    }
+    select {
+      width: 200px;
+      float: left;
+      display: block;
+    }
+  }
+}
+table {
+  width: 100%;
+  text-align: left;
+
+  thead {
+    th {
+      border-bottom: 2px solid;
+    }
+  }
+  tbody {
+    tr:nth-child(2n) td {
+      background: #eee;
+    }
+  }
+}
+svg {
+  text {
+    font-family: sans-serif;
+  }
+  path,
+  line {
+    fill: none;
+  }
+  .axis {
+    line {
+      stroke: #ccc;
+    }
+    .x-tick line,
+    .y-tick line {
+      stroke-dasharray: 10,4;
+    }
+  }
+  .browser {
+    path {
+      stroke-width: 2px;
+      opacity: 0.5;
+    } 
+    &.active path,
+    &:hover path {
+      stroke-width: 4px;
+      opacity: 1;
+    }
+
+    text {
+      fill: transparent;
+    }
+    &.active text,
+    &:hover text {
+      fill: #000;
+    }
+  }
+}

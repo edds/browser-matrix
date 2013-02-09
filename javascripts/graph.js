@@ -18,7 +18,7 @@
 
       graph.svg = d3.select('#graph')
         .append('svg:svg')
-          .attr('width', (graph.width + 300 + padding * 2))
+          .attr('width', (graph.width + 190 + padding * 2))
           .attr('height', (graph.height + 60 + padding * 2))
           .attr('class', 'multiLine')
         .append('g')
