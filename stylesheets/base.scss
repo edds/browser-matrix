@@ -1,3 +1,11 @@
+@mixin prefix($property, $value){
+  -ms-#{$property}:   $value;
+  -o-#{$property}:   $value;
+  -moz-#{$property}:   $value;
+  -webkit-#{$property}:   $value;
+  #{$property}:   $value;
+}
+
 body {
   font: 16px helvetica, sans-serif;
   text-align: center;
@@ -5,14 +13,31 @@ body {
 header {
   display: block;
   max-width: 870px;
-  margin: 0 auto;
+  margin: 30px auto;
   text-align: left;
+  border-bottom: 3px solid;
+  overflow: hidden;
 
   h1 {
-    font: bold 36px helvetica;
+    font: bold 36px/1.111 helvetica;
     padding: 5px 0 10px;
-    border-bottom: 3px solid;
+    float: left;
+    margin: 0;
   }
+  p {
+    font: 20px/1 helvetica;
+    float: right;
+    padding: 20px 0 10px;
+    margin: 0;
+  }
+}
+.options {
+  display: block;
+  max-width: 870px;
+  margin: 0 auto;
+  text-align: left;
+  overflow: hidden;
+
   div {
     display: block;
     float: left;
@@ -80,6 +105,31 @@ svg {
     &.active text,
     &:hover text {
       fill: #000;
+    }
+  }
+}
+.fork {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 300px;
+  height: 30px;
+  margin: 0;
+  @include prefix(transform, rotate(45deg));
+  @include prefix(transform-origin, 150px 150px);
+  background: #8A0707;
+
+  a {
+    margin: 1px 0;
+    border: 1px dashed;
+    color: #fff;
+    display: block;
+    padding: 4px;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
