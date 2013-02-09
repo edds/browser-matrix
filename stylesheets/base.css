@@ -90,7 +90,7 @@ svg .browser.active text, svg .browser:hover text {
   background: #8A0707; }
   .fork a {
     margin: 1px 0;
-    border: 1px dashed;
+    border: 1px dashed rgba(255, 255, 255, 0.8);
     color: #fff;
     display: block;
     padding: 4px;
