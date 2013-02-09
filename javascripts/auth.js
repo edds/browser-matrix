@@ -31,6 +31,7 @@
           endpoint = 'https://www.googleapis.com/oauth2/v1/tokeninfo?callback=?';
 
       if(typeof params.access_token !== 'undefined'){
+        window.location.hash = '';
         auth.user = {
           accessToken: params.access_token
         };

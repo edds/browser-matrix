@@ -8,6 +8,11 @@
     dates: [],
     totals: [],
     data: [],
+    reset: function(){
+      browsers.dates = [];
+      browsers.totals = [];
+      browsers.data = [];
+    },
     endpoint: function(profileId, startDate, endDate){
       return "https://www.googleapis.com/analytics/v3/data/ga?"
       + "ids="+ profileId +"&"
@@ -115,11 +120,11 @@
       var percent = (value/total) * 100;
       return Math.round(percent * 100)/100;
     },
-    update: function(profileId, callback, date){
+    update: function(profileId, callback, date, period){
       var startDate, endDate;
-      date.setDate(date.getDate() - 7);
+      date.setDate(date.getDate() - period);
       startDate = date.getFullYear() +'-'+ browsers.zeroPad(date.getMonth()+1) +'-'+ browsers.zeroPad(date.getDate());
-      date.setDate(date.getDate() + 6);
+      date.setDate(date.getDate() + period - 1);
       endDate = date.getFullYear() +'-'+ browsers.zeroPad(date.getMonth()+1) +'-'+ browsers.zeroPad(date.getDate());
 
       var endpoint = browsers.endpoint('ga:'+profileId, startDate, endDate);

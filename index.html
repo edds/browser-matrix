@@ -25,6 +25,7 @@
   <div class="page-options">
     <label for="period">Period:</label>
     <select id="period" name="period">
+      <option value="1">1 day</option>
       <option value="3">3 days</option>
       <option value="7" selected>7 days</option>
       <option value="14">14 days</option>
@@ -65,7 +66,7 @@
     auth: {
       response_type: 'token',
       client_id: '19637567954.apps.googleusercontent.com',
-      redirect_uri: window.location.href,
+      redirect_uri: window.location.href.split('#')[0],
       scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly',
       state: '',
       approval_prompt: 'auto'

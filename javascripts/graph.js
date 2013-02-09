@@ -44,6 +44,9 @@
         .x(function(d, i) { return graph.x(i); })
         .y(function(d, i) { return graph.y(d); });
     },
+    reset: function(){
+      graph.maxPercent = 20;
+    },
     addData: function(days, data){
       var browser, browsers, tick, ticks;
       if(data[0].days[data[0].days.length-1] > graph.maxPercent){
@@ -54,7 +57,7 @@
 
       // add new data to the browsers
       browsers = graph.browsers.selectAll('.browser')
-        .data(data.slice(0,25), function(d){ return d.os+'-'+d.browser+'-'+d.version; })
+        .data(data.slice(0,matrix.manager.lines()), function(d){ return d.os+'-'+d.browser+'-'+d.version; })
 
       // add new elemnts not matched by previous data
       browser = browsers.enter()
