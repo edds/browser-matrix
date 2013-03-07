@@ -105,6 +105,7 @@
       $('#graph').html('');
       matrix.graph.reset();
       matrix.browsers.reset();
+      matrix.user.reset();
     },
     hardReload: function(){
       manager.reset();

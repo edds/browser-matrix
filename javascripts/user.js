@@ -7,6 +7,7 @@
   var user = {
     details: false,
     callbacks: [],
+    outstandingCallbacks: [],
 
     getAccounts: function(callback){
       var endpoint = 'https://www.googleapis.com/analytics/v3/management/accounts';
@@ -57,12 +58,23 @@
           $.ajax({
             dataType: 'json',
             url: requestUri,
-            success: callback
+            success: (function(){
+              var callbackId = Math.random();
+              user.outstandingCallbacks.push(callbackId);
+              return function(data){
+                if(user.outstandingCallbacks.indexOf(callbackId) > -1){
+                  callback(data);
+                }
+              }
+            }())
           });
         } else {
           alert('Your session has expired, please reload the page');
         }
       }
+    },
+    reset: function(){
+      user.outstandingCallbacks = [];
     }
   };
 
