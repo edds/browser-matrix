@@ -40,7 +40,7 @@
       });
 
       graph.line = d3.svg.line()
-        .interpolate('basis')
+        .interpolate('monotone')
         .x(function(d, i) { return graph.x(i); })
         .y(function(d, i) { return graph.y(d); });
     },
