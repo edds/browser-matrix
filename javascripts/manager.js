@@ -83,9 +83,9 @@
           date;
       matrix.template($('#wrapper'), 'browser-table', {
         results: stats,
-        days: matrix.browsers.dates
+        days: matrix.browsers.getDays()
       });
-      matrix.graph.addData(matrix.browsers.dates, stats);
+      matrix.graph.addData(matrix.browsers.getDays(), stats);
       if(manager.renderedWeeks < 8){
         manager.renderedWeeks = manager.renderedWeeks + 1;
         date = new Date();
@@ -114,7 +114,7 @@
       $('#graph').html('');
       matrix.graph.reset();
       matrix.graph.init();
-      matrix.graph.addData(matrix.browsers.dates, matrix.browsers.getData());
+      matrix.graph.addData(matrix.browsers.getDays(), matrix.browsers.getData());
     }
   };
   root.matrix.manager = manager;

@@ -182,9 +182,9 @@
         };
         for(j=0,_j=browsers.dates.length; j<_j; j++){
           if(typeof browsers.data[i][browsers.dates[j]] !== 'undefined'){
-            browser.days.unshift(browsers.percent(browsers.data[i][browsers.dates[j]], browsers.totals[j]));
+            browser.days.push(browsers.percent(browsers.data[i][browsers.dates[j]], browsers.totals[j]));
           } else {
-            browser.days.unshift(0);
+            browser.days.push(0);
           }
         }
         out.sort(function(a, b){
@@ -193,6 +193,9 @@
         out.push(browser);
       }
       return out;
+    },
+    getDays: function(){
+      return browsers.dates;
     }
   };
   root.matrix.browsers = browsers;

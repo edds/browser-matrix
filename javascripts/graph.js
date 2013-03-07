@@ -49,10 +49,10 @@
     },
     addData: function(days, data){
       var browser, browsers, tick, ticks;
-      if(data[0].days[data[0].days.length-1] > graph.maxPercent){
-        graph.maxPercent = data[0].days[data[0].days.length - 1];
+      if(data[0].days[0] > graph.maxPercent){
+        graph.maxPercent = data[0].days[0];
       }
-      graph.x = d3.scale.linear().domain([0, days.length-1]).range([graph.width, 0]);
+      graph.x = d3.scale.linear().domain([days.length-1, 0]).range([graph.width, 0]);
       graph.y = d3.scale.linear().domain([0, graph.maxPercent]).range([graph.height, 0]).nice();
 
       // add new data to the browsers
@@ -80,10 +80,8 @@
       browsers.select('.line').transition()
         .attr('d', function(d){ return graph.line(d.days); });
 
-      // This uses a nasty array hack to get the dates reversed without effecting
-      // the original
       ticks = graph.axis.selectAll('.x-tick')
-        .data(Array.apply(null,days).reverse())
+        .data(days, function(d){ return d; })
 
       tick = ticks.enter()
         .append('g').attr('class', 'x-tick')
@@ -95,14 +93,14 @@
         .attr('class', 'text')
         .attr('text-anchor', 'start')
         .attr("dy", '15px')
-        .attr('transform', function(d, i) { return 'translate(0,'+graph.height+') rotate(45)'; })
-        .text(function(d){ return d; });
+        .attr('transform', function(d, i) { return 'translate(0,'+graph.height+') rotate(45)'; });
 
       ticks.select('.line').transition()
         .attr('x1', function(d, i){ return graph.x(i)+.5 })
         .attr('x2', function(d, i){ return graph.x(i)+.5 });
       ticks.select('.text').transition()
-        .attr('transform', function(d, i) { return 'translate('+graph.x(i)+','+graph.height+') rotate(45)'; });
+        .attr('transform', function(d, i) { return 'translate('+graph.x(i)+','+graph.height+') rotate(45)'; })
+        .text(function(d){ return d; });
 
       ticks = graph.axis.selectAll('.y-tick')
         .data(graph.y.ticks(5))
