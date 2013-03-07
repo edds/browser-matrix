@@ -65,10 +65,10 @@
 
       // add new text nodes
       browser.append("text")
-        .datum(function(d) { return {name: d.os+' -  '+d.browser+' - '+d.version, value: d.days[0]}; })
-        .attr("transform", function(d){ return "translate("+graph.width+","+graph.y(d.value)+")"; })
+        .datum(function(d) { return {name: d.os+' -  '+d.browser+' - '+d.version }; })
         .attr("x", 3)
         .attr("dy", ".35em")
+        .attr('class', 'text')
         .text(function(d) { return d.name; });
 
       // add new lines
@@ -76,9 +76,21 @@
         .attr('class', 'line')
         .attr('stroke', function(d,i){ return graph.colours(i); });
 
+      browsers.select('.text').transition()
+        .attr("transform", function(d){ return "translate("+graph.width+","+graph.y(d.days[d.days.length-1])+")"; })
+
       // update all the lines to have the new data
       browsers.select('.line').transition()
         .attr('d', function(d){ return graph.line(d.days); });
+
+      browsers.on('click', function(){
+        var browser = d3.select(this);
+        if(browser.attr('class').indexOf('active') < -1){
+          browser.attr('class', 'browser')
+        } else {
+          browser.attr('class', 'browser active');
+        }
+      });
 
       ticks = graph.axis.selectAll('.x-tick')
         .data(days, function(d){ return d; })
