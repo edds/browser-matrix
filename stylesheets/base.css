@@ -26,6 +26,8 @@ header {
   margin: 0 auto;
   text-align: left;
   overflow: hidden; }
+  .options.hidden {
+    display: none; }
   .options div {
     display: block;
     float: left;
@@ -40,12 +42,12 @@ header {
       float: left;
       display: block; }
 
-table {
+table.matrix {
   width: 100%;
   text-align: left; }
-  table thead th {
+  table.matrix thead th {
     border-bottom: 2px solid; }
-  table tbody tr:nth-child(2n) td {
+  table.matrix tbody tr:nth-child(2n) td {
     background: #eee; }
 
 svg text {
@@ -97,3 +99,14 @@ svg .browser.active text, svg .browser:hover text {
     text-decoration: none; }
     .fork a:hover {
       text-decoration: underline; }
+
+.overlay {
+  display: block;
+  max-width: 870px;
+  margin: 10px auto;
+  text-align: left;
+  overflow: hidden; }
+  .overlay.hidden {
+    display: none; }
+  .overlay button:hover {
+    cursor: pointer; }

@@ -38,6 +38,9 @@ header {
   text-align: left;
   overflow: hidden;
 
+  &.hidden {
+    display: none;
+  }
   div {
     display: block;
     float: left;
@@ -56,7 +59,7 @@ header {
     }
   }
 }
-table {
+table.matrix {
   width: 100%;
   text-align: left;
 
@@ -131,5 +134,19 @@ svg {
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+.overlay {
+  display: block;
+  max-width: 870px;
+  margin: 10px auto;
+  text-align: left;
+  overflow: hidden;
+
+  &.hidden {
+    display: none;
+  }
+  button:hover {
+    cursor: pointer;
   }
 }

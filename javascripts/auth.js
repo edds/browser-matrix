@@ -32,6 +32,7 @@
 
       if(typeof params.access_token !== 'undefined'){
         window.location.hash = '';
+        auth.toggleLoginBox();
         auth.user = {
           accessToken: params.access_token
         };
@@ -63,6 +64,15 @@
         params[decodeURIComponent(chunk[0])] = decodeURIComponent(chunk[1]);
       }
       return params;
+    },
+    toggleLoginBox: function(){
+      if($('.options').hasClass('hidden')){
+        $('.options').removeClass('hidden');
+        $('.overlay').addClass('hidden');
+      } else {
+        $('.options').removeClass('hidden');
+        $('.overlay').addClass('hidden');
+      }
     }
   }
 

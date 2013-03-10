@@ -2,13 +2,19 @@
 
 <title>Browser Matrix</title>
 <link rel="stylesheet" href="./stylesheets/base.css">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>window.attachEvent("onload", function() { CFInstall.check({ mode: "overlay" }); });</script>
+<![endif]-->
 
 <header>
   <h1>Browser Matrix</h1>
   <p>by <a href="http://e26.co.uk">Edd Sowden</a></p>
 </header>
 
-<div class="options">
+<div class="options hidden">
   <div class="account-options">
     <label for="account">Account:</label>
     <select id="account" name="account" disabled="disabled">
@@ -50,7 +56,21 @@
 
 <p class="fork"><a href="http://github.com/edds/browser-matrix">View on GitHub</a></p>
 
+<div class="overlay">
+  <p>
+    Browser Matrix is a tool which lets you use your Google Analytics data to
+    graph percentage share of browsers over time.
+  </p>
+  <p>
+    To do that you will need to this page access to your Google Analytics
+    account. Don't worry, the details of your account are never sent
+    back to any servers this is entirely a client-side application.
+  </p>
+  <p><button id="start">Authenticate with Google</button></p>
+</div>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!--[if gt IE 8]><!-->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="javascripts/vendor/mustache.js"></script>
 
@@ -63,7 +83,7 @@
 
 <script src="javascripts/manager.js"></script>
 
-
+<!--<![endif]-->
 <!--[if lt IE 10]><script type="text/javascript">
   if(window.location.hash.replace('#','').length > 0 && window.location.hash.search('stopRedirectionInIE') == -1) {
     window.location.href = window.location.href+'&stopRedirectionInIE';
@@ -83,7 +103,14 @@
     }
   };
 
-  matrix.manager.init();
+  $(function(){
+    $('#start').click(function(){
+      matrix.manager.init();
+    });
+    if(window.location.hash.indexOf('token') > -1){
+      matrix.manager.init();
+    }
+  });
 </script>
 <script type="text/mustache" id="select-options">
   <option value="">Select {{object}}</option>
@@ -92,7 +119,7 @@
   {{/options}}
 </script>
 <script type="text/mustache" id="browser-table">
-  <table>
+  <table class="matrix">
     <thead>
       <tr>
         <th>OS</th>

@@ -75,7 +75,8 @@
             });
           }
         } else {
-          alert('Your session has expired, please reload the page');
+          alert('Your session has expired, you will need to relogin to continue');
+          matrix.auth.toggleLoginBox();
         }
       }
     },
