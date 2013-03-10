@@ -64,6 +64,11 @@
 <script src="javascripts/manager.js"></script>
 
 
+<!--[if lt IE 10]><script type="text/javascript">
+  if(window.location.hash.replace('#','').length > 0 && window.location.hash.search('stopRedirectionInIE') == -1) {
+    window.location.href = window.location.href+'&stopRedirectionInIE';
+  }
+</script><![endif]-->
 <script>
   if(typeof window.matrix === 'undefined'){ window.matrix = {}; }
 
