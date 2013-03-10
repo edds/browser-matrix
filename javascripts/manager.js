@@ -75,8 +75,8 @@
         });
     },
     loadStats: function(){
-      matrix.browsers.update(manager.profileId, manager.renderStats, new Date(), manager.period());
       matrix.graph.init();
+      matrix.browsers.update(manager.profileId, manager.renderStats, new Date(), manager.period());
     },
     renderStats: function(){
       var stats = matrix.browsers.getData(),

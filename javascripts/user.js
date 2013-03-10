@@ -39,7 +39,7 @@
       return output;
     },
     apiRequest: function(requestUri, callback){
-      var extraParams = '';
+      var extraParams = '', authedRequestUri, response;
       if(user.details === false){
         user.callbacks.push([requestUri, callback]);
         matrix.auth.getUser(function(details){
@@ -53,21 +53,27 @@
         if(+new Date() < user.details.expires){
           extraParams = 'access_token='+user.details.accessToken+'&callback=?';
 
-          requestUri = requestUri + (requestUri.indexOf('?') > -1 ? '&' : '?') + extraParams;
+          authedRequestUri = requestUri + (requestUri.indexOf('?') > -1 ? '&' : '?') + extraParams;
 
-          $.ajax({
-            dataType: 'json',
-            url: requestUri,
-            success: (function(){
-              var callbackId = Math.random();
-              user.outstandingCallbacks.push(callbackId);
-              return function(data){
-                if(user.outstandingCallbacks.indexOf(callbackId) > -1){
-                  callback(data);
+          response = matrix.cache(user.details.id + '-' + requestUri);
+          if(typeof response !== 'undefined'){
+            callback(response);
+          } else {
+            $.ajax({
+              dataType: 'json',
+              url: authedRequestUri,
+              success: (function(){
+                var callbackId = Math.random();
+                user.outstandingCallbacks.push(callbackId);
+                return function(data){
+                  matrix.cache(user.details.id + '-' + requestUri, data);
+                  if(user.outstandingCallbacks.indexOf(callbackId) > -1){
+                    callback(data);
+                  }
                 }
-              }
-            }())
-          });
+              }())
+            });
+          }
         } else {
           alert('Your session has expired, please reload the page');
         }
