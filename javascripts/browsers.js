@@ -23,73 +23,6 @@
       + "max-results=1000&"
       + "sort=-ga:visitors"
     },
-    cleanBrowser: [
-      {
-        key: /BlackBerry[0-9]+/,
-        browser: 'BlackBerry',
-        version: function(row){ return 'all'; }
-      },
-      {
-        key: /Android Browser/,
-        browser: 'Android Browser',
-        version: function(row){
-          var version = row[3].split('.');
-          if(version.length > 1){
-            return version[0] + "." + version[1];
-          } else {
-            return version[0];
-          }
-        }
-      },
-      {
-        key: /Chrome/,
-        browser: 'Chrome',
-        version: function(row){ return parseInt(row[2].split('.')[0], 10); }
-      },
-      {
-        key: /Firefox/,
-        browser: 'Firefox',
-        version: function(row){ return row[2].split('.')[0]; }
-      },
-      {
-        key: /Internet Explorer/,
-        browser: 'Internet Explorer',
-        version: function(row){ return row[2]; }
-      },
-      {
-        key: /nokia/i,
-        browser: 'Nokia',
-        version: function(row){ return 'all'; }
-      },
-      {
-        key: /Safari/,
-        browser: 'Safari',
-        version: function(row){
-          var version = row[2].split('.');
-          if(row[0] === 'iOS'){
-            var iosVersion = row[3].split('.');
-            if(iosVersion.length > 1) {
-              return iosVersion[0] + "." + iosVersion[1];
-            } else {
-              return iosVersion[0];
-            }
-          }
-          if(version[0] === '533'){
-            return '5';
-          } else if(version[0] === '534'){
-            return '5.1';
-          } else if(version[0] === '536'){
-            return '6';
-          }
-          return version[0];
-        }
-      },
-      {
-        key: /SAMSUNG-GT.*/,
-        browser: 'Samsung-GT',
-        version: function(row){ return 'all'; }
-      }
-    ],
     cleanOS: function(value){
       if(value === 'Windows' || value === 'Macintosh' || value === 'Linux' || value === 'Chrome OS'){
         return 'Desktop';
@@ -135,8 +68,8 @@
 
         data.rows.forEach(function(data,i){
           var i, _i, row, found = false;
-          for(i=0,_i=browsers.cleanBrowser.length; i<_i; i++){
-            row = browsers.cleanBrowser[i];
+          for(i=0,_i=matrix.browserMaps[matrix.manager.browserIndex()].length; i<_i; i++){
+            row = matrix.browserMaps[matrix.manager.browserIndex()][i];
             if(row.key.exec(data[1])){
               found = true;
               browsers.addData({

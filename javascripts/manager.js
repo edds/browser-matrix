@@ -18,7 +18,8 @@
         $properties: $('#property'),
         $profiles: $('#profile'),
         $period: $('#period'),
-        $lines: $('#lines')
+        $lines: $('#lines'),
+        $combine: $('#combine')
       }
 
       manager.selects.$period.on('change', function(){
@@ -29,6 +30,11 @@
       manager.selects.$lines.on('change', function(){
         if(manager.profileId !== false){
           manager.softReload();
+        }
+      });
+      manager.selects.$combine.on('change', function(){
+        if(manager.profileId !== false){
+          manager.hardReload();
         }
       });
     },
@@ -98,6 +104,9 @@
     },
     lines: function(){
       return parseInt(manager.selects.$lines.val(), 10);
+    },
+    browserIndex: function(){
+      return manager.selects.$combine.val();
     },
     reset: function(){
       manager.renderedWeeks = 0;
