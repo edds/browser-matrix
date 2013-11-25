@@ -18,7 +18,7 @@
         $properties: $('#property'),
         $profiles: $('#profile'),
         $period: $('#period'),
-        $lines: $('#lines'),
+        $support: $('#support'),
         $combine: $('#combine')
       }
 
@@ -27,7 +27,7 @@
           manager.hardReload();
         }
       });
-      manager.selects.$lines.on('change', function(){
+      manager.selects.$support.on('change', function(){
         if(manager.profileId !== false){
           manager.softReload();
         }
@@ -102,8 +102,8 @@
     period: function(){
       return parseInt(manager.selects.$period.val(), 10);
     },
-    lines: function(){
-      return parseInt(manager.selects.$lines.val(), 10);
+    support: function(){
+      return parseInt(manager.selects.$support.val(), 10);
     },
     browserIndex: function(){
       return manager.selects.$combine.val();
@@ -124,7 +124,7 @@
       $('#graph').html('');
       matrix.graph.reset();
       matrix.graph.init();
-      matrix.graph.addData(matrix.browsers.getDays(), matrix.browsers.getData());
+      matrix.graph.addData(matrix.browsers.getDays(), matrix.browsers.getSupportedData());
     }
   };
   root.matrix.manager = manager;

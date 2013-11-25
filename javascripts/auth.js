@@ -31,7 +31,7 @@
           endpoint = 'https://www.googleapis.com/oauth2/v1/tokeninfo?callback=?';
 
       if(typeof params.access_token !== 'undefined'){
-        window.location.hash = '';
+        //window.location.hash = '';
         auth.toggleLoginBox();
         auth.user = {
           accessToken: params.access_token

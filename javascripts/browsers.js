@@ -129,6 +129,9 @@
     },
     getDays: function(){
       return browsers.dates;
+    },
+    getSupportedData: function(){
+      return browsers.getData().slice(0, 14);
     }
   };
   root.matrix.browsers = browsers;
