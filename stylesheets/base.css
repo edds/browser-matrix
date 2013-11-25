@@ -46,7 +46,8 @@ table.matrix {
   width: 100%;
   text-align: left; }
   table.matrix thead th {
-    border-bottom: 2px solid; }
+    border-bottom: 2px solid;
+    cursor: pointer; }
   table.matrix tbody tr:nth-child(2n) td {
     background: #eee; }
   table.matrix tbody tr td.supported {

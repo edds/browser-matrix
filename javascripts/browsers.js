@@ -140,7 +140,7 @@
       }
       return i;
     },
-    getData: function(){
+    getData: function(sortIndex){
       var out = [],
           browser,
           dayTotal, dayCap,
@@ -180,9 +180,13 @@
           dayTotal = dayTotal + out[i].days[j];
         }
       }
-      out.sort(function(a, b){
-        return Math.max.apply(null, b.days) - Math.max.apply(null, a.days);
-      });
+      if(typeof sortIndex !== 'undefined'){
+        out.sort(function(a, b){ return b.days[sortIndex] - a.days[sortIndex]; });
+      } else {
+        out.sort(function(a, b){
+          return Math.max.apply(null, b.days) - Math.max.apply(null, a.days);
+        });
+      }
       return out;
     },
     getDays: function(){

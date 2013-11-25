@@ -36,6 +36,15 @@
           manager.hardReload();
         }
       });
+      $('#wrapper').on('click', 'thead th', function(){
+        var index = $(this).index() - 3;
+        if(index > -1){
+          matrix.template($('#wrapper'), 'browser-table', {
+            results: matrix.browsers.getData(index),
+            days: matrix.browsers.getDays()
+          });
+        }
+      });
     },
     renderAccounts: function(data){
       matrix.template(manager.selects.$accounts, 'select-options', { object: 'account', options: data });
