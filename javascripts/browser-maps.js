@@ -70,6 +70,30 @@
         key: /SAMSUNG-GT.*/,
         browser: 'Samsung-GT',
         version: function(row){ return 'all'; }
+      },
+      {
+        key: /Opera Mini/,
+        browser: 'Opera Mini',
+        version: function(row){
+          var v = row[2].split('.');
+          return v[0] + '.' + v[1];
+        }
+      },
+      {
+        key: /^Opera$/,
+        browser: 'Opera',
+        version: function(row){
+          var v = row[2].split('.');
+          return v[0] + '.' + v[1];
+        }
+      },
+      {
+        key: /BlackBerry/,
+        browser: 'BlackBerry',
+        version: function(row){
+          var v = row[2].split('.');
+          return v[0] + '.' + v[1];
+        }
       }
     ],
     autoUpdating: [
@@ -144,6 +168,30 @@
         key: /SAMSUNG-GT.*/,
         browser: 'Samsung-GT',
         version: function(row){ return 'all'; }
+      },
+      {
+        key: /Opera Mini/,
+        browser: 'Opera Mini',
+        version: function(row){
+          var v = row[2].split('.');
+          return v[0] + '.' + v[1];
+        }
+      },
+      {
+        key: /^Opera$/,
+        browser: 'Opera',
+        version: function(row){
+          var v = row[2].split('.');
+          return v[0] + '.' + v[1];
+        }
+      },
+      {
+        key: /BlackBerry/,
+        browser: 'BlackBerry',
+        version: function(row){
+          var v = row[2].split('.');
+          return v[0] + '.' + v[1];
+        }
       }
     ]
   }

@@ -143,13 +143,13 @@
     </thead>
     <tbody>
       {{#results}}
-        <tr>
+        <tr{{#supported}} class="supported"{{/supported}}>
           <td>{{os}}</td>
           <td>{{browser}}</td>
           <td>{{version}}</td>
-          {{#days}}
-            <td>{{.}}%</td>
-          {{/days}}
+          {{#daysWithSupport}}
+            <td{{#supported}} class="supported"{{/supported}}>{{users}}%</td>
+          {{/daysWithSupport}}
         </tr>
       {{/results}}
     </tbody>

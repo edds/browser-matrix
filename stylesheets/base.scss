@@ -72,6 +72,9 @@ table.matrix {
     tr:nth-child(2n) td {
       background: #eee;
     }
+    tr td.supported {
+      background: #6c6;
+    }
   }
 }
 svg {
@@ -95,7 +98,7 @@ svg {
     path {
       stroke-width: 2px;
       opacity: 0.5;
-    } 
+    }
     &.active path,
     &:hover path {
       stroke-width: 4px;

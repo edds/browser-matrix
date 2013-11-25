@@ -5,7 +5,6 @@
   if(typeof root.matrix === 'undefined'){ root.matrix = {} }
 
   var manager = {
-    renderedWeeks: 0,
     selects: {},
     profileId: false,
     propertyId: false,
@@ -82,34 +81,27 @@
     },
     loadStats: function(){
       matrix.graph.init();
-      matrix.browsers.update(manager.profileId, manager.renderStats, new Date(), manager.period());
+      matrix.browsers.fetchData(manager.profileId, manager.renderStats);
     },
     renderStats: function(){
       var stats = matrix.browsers.getData(),
-          date;
+          days = matrix.browsers.getDays();
       matrix.template($('#wrapper'), 'browser-table', {
         results: stats,
-        days: matrix.browsers.getDays()
+        days: days
       });
-      matrix.graph.addData(matrix.browsers.getDays(), stats);
-      if(manager.renderedWeeks < 8){
-        manager.renderedWeeks = manager.renderedWeeks + 1;
-        date = new Date();
-        date.setDate(date.getDate() - (manager.period()*manager.renderedWeeks));
-        matrix.browsers.update(manager.profileId, manager.renderStats, date, manager.period());
-      }
+      matrix.graph.addData(days, matrix.browsers.getSupportedData());
     },
-    period: function(){
-      return parseInt(manager.selects.$period.val(), 10);
+    getPeriod: function(){
+      return manager.selects.$period.val();
     },
-    support: function(){
+    getSupport: function(){
       return parseInt(manager.selects.$support.val(), 10);
     },
     browserIndex: function(){
       return manager.selects.$combine.val();
     },
     reset: function(){
-      manager.renderedWeeks = 0;
       $('#wrapper').html('');
       $('#graph').html('');
       matrix.graph.reset();
@@ -121,10 +113,11 @@
       manager.loadStats();
     },
     softReload: function(){
+      $('#wrapper').html('');
       $('#graph').html('');
       matrix.graph.reset();
       matrix.graph.init();
-      matrix.graph.addData(matrix.browsers.getDays(), matrix.browsers.getSupportedData());
+      manager.renderStats();
     }
   };
   root.matrix.manager = manager;

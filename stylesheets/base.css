@@ -49,6 +49,8 @@ table.matrix {
     border-bottom: 2px solid; }
   table.matrix tbody tr:nth-child(2n) td {
     background: #eee; }
+  table.matrix tbody tr td.supported {
+    background: #6c6; }
 
 svg text {
   font-family: sans-serif; }

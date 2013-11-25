@@ -49,9 +49,13 @@
     },
     addData: function(days, data){
       var browser, browsers, tick, ticks;
-      if(data[0].days[0] > graph.maxPercent){
-        graph.maxPercent = data[0].days[0];
-      }
+      data.forEach(function(line, i){
+        line.days.forEach(function(day, i){
+          if(graph.maxPercent < day){
+            graph.maxPercent = day;
+          }
+        });
+      });
       graph.x = d3.scale.linear().domain([days.length-1, 0]).range([graph.width, 0]);
       graph.y = d3.scale.linear().domain([0, graph.maxPercent]).range([graph.height, 0]).nice();
 
