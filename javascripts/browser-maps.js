@@ -115,6 +115,14 @@
         }
       },
       {
+        key: /Amazon Silk/,
+        browser: 'Amazon Silk',
+        version: function(row){
+          var version = row[2].split('.');
+          return version[0];
+        }
+      },
+      {
         key: /Chrome/,
         browser: 'Chrome',
         version: function(){ return 'auto'; }
