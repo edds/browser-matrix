@@ -190,7 +190,11 @@
         browser: 'Opera',
         version: function(row){
           var v = row[2].split('.');
-          return v[0] + '.' + v[1];
+          if(parseInt(v[0], 10) < 15){
+            return v[0] + '.' + v[1];
+          } else {
+            return 'auto';
+          }
         }
       },
       {
