@@ -103,6 +103,11 @@
         version: function(row){ return 'all'; }
       },
       {
+        key: /Android Webview/,
+        browser: 'Android Webview',
+        version: function(row){ return 'auto'; }
+      },
+      {
         key: /Android Browser/,
         browser: 'Android Browser',
         version: function(row){
