@@ -5,7 +5,7 @@ OAuth implementation to log you into your Google Analytics profile so that you
 can see information about the browsers your users use.
 
 You can use the tool without any installation here:
-[edds.github.com/browser-matrix](http://edds.github.com/browser-matrix)
+[edds.github.io/browser-matrix](http://edds.github.io/browser-matrix)
 
 ## Installation
 
